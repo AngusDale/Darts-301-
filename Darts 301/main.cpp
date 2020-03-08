@@ -27,8 +27,8 @@ int main() {
 		Game game(Joe, Sid);	
 	}
 
-	printStats(Joe);
-	printStats(Sid);
+	//printStats(Joe);
+	//printStats(Sid);
 }
 
 
