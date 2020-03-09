@@ -24,7 +24,8 @@ int main() {
 	int sims = 1; //simCount();
 
 	for (int i = 0; i < sims; i++) {
-		Game game(Joe, Sid);	
+		Game game(Joe, Sid);
+		game.simulateRound();
 	}
 
 	//printStats(Joe);

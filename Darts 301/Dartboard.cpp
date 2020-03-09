@@ -2,7 +2,6 @@
 
 Dartboard::Dartboard() {
 	gameIsWon = false;
-	numThrown = 0;
 }
 
 // throws for the bullseye
@@ -13,14 +12,14 @@ int Dartboard::bull(int accuracy) {
 	else if(rand <= accuracy + ((100 - accuracy)/2)){
 		return RING;
 	}
-	return;
+	return 0;
 }
 
 // throws for a single number excluding the bullseye
 int Dartboard::single(int accuracy, int throwFor) {
 	int rand = roll(100);
 	if (rand < accuracy) {
-		numThrown = throwFor;
+		return throwFor;
 	}
 	else { 		
 		// if the player misses we check the number they were throwing for
@@ -29,15 +28,15 @@ int Dartboard::single(int accuracy, int throwFor) {
 		// we see if the random num generated earlier was even or odd to dictate which side the player missed to
 		if (rand % 2 == 0) {
 			// we check if we're at either end of the array and react accordingly
-			if (rand == numsOnBoard[NUMBER_OF_SCORES]) { numThrown = numsOnBoard[0]; }
-			else{ numThrown = numsOnBoard[position + 1]; }
+			if (position == numsOnBoard[NUMBER_OF_SCORES]) { return numsOnBoard[0]; }
+			else { return numsOnBoard[position + 1]; }
 		}else {
-			if (rand == numsOnBoard[0]) { numThrown = numsOnBoard[NUMBER_OF_SCORES]; }
-			else { numThrown = numsOnBoard[position - 1]; }
+			if (position == numsOnBoard[0]) { return numsOnBoard[NUMBER_OF_SCORES]; }
+			else { return numsOnBoard[position - 1]; }
 		}
 	}
 
-	return numThrown;
+	return 0;
 }
 
 // finds the number we threw for on the board

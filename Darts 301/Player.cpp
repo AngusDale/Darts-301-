@@ -3,11 +3,18 @@
 Player::Player(int a, std::string n) {
 	accuracy = a;
 	name = n;
+	State::neutral;
+	resetScore();
+	gamesWon = 0;
+	bullsHit = 0;
+	dartsThrown = 0;
 }
 
 Player::Player() {
 	accuracy = DEFAULT_ACCURACY;
 	name = " ";
+	State::neutral;
+	resetScore();
 }
 
 Player::~Player() {
@@ -26,5 +33,5 @@ void Player::setDartsThrown(int darts)	{ dartsThrown = darts; }
 int Player::getGamesWon()				{ return gamesWon; }
 void Player::setGamesWon(int games)		{ gamesWon = games; }
 int Player::getAccuracy()				{ return accuracy; }
-std::string Player::getName()			{ return std::string(); }
+std::string Player::getName()			{ return name; }
 #pragma endregion

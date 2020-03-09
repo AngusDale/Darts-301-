@@ -1,4 +1,5 @@
-﻿  Dartboard.cpp
-  Player.cpp
+﻿  Player.cpp
+  main.cpp
   Generating Code...
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(20,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Darts 301.vcxproj -> C:\Users\Angus D\source\repos\Darts-301-\x64\Debug\Darts 301.exe

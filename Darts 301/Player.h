@@ -1,8 +1,15 @@
 #pragma once
 #include <string>
+#include<iostream>
 
 #define DEFAULT_ACCURACY 70;
 #define STARTING_SCORE 301;
+
+enum class State {
+	neutral,
+	behind,
+	final_shot
+};
 
 class Player
 {

@@ -26,10 +26,10 @@ void Game::simulateTurn(Player* player)
 {
 	int numsThrown[3] = { 0, 0, 0 };
 
-	if (roundsSimulated == 0) {
-		dartboard.single(player->getAccuracy(), 19);
-		for(int i = 0; i < 2; i++)
-		dartboard.bull(player->getAccuracy());
+	std::cout << player->getName() << std::endl;
+		
+	if (player->getScore() % 2 != 0) {
+		//dartboard.single(player->getAccuracy(), 19);
 	}
 	else {
 
