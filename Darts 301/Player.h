@@ -6,7 +6,7 @@
 #define STARTING_SCORE 301;
 
 enum class State {
-	neutral,
+	neutral = 0,
 	behind,
 	final_shot
 };
@@ -17,27 +17,32 @@ public:
 	Player(int a, std::string n);
 	Player();
 	~Player();
-
+	State state;
 	void resetScore();
 
 #pragma region Getters & Setters
 	int getDartsThrown();
-	void setDartsThrown(int);
+	void incDartsThrown();
 	int getBullsHit();
-	void setBullsHit(int);
+	void incBullsHit();
 	int getScore();
 	void setScore(int);
+	int getScoreBefore();
+	void setScoreBefore(int);
 	int getGamesWon();
 	void setGamesWon(int);
 	int getAccuracy();
-	State getState(Player*);
+	void setState(char);
+	State getState();
+
 	std::string getName();
 #pragma endregion
 
-private: 		
+private: 
 	int dartsThrown;
 	int bullsHit;
 	int score;
+	int scoreBefore;
 	int gamesWon;
 	std::string name;
 	int accuracy;

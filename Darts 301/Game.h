@@ -14,7 +14,9 @@ public:
 	void simulateRound();
 	void simulateTurn(Player*, Player*);
 	bool whoGoesFirst();
+
 private:
+	int numThrown;
 	int roundsSimulated;
 	const int turnsPerRound = 3;
 	bool joesTurn;

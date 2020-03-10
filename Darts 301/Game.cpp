@@ -10,7 +10,8 @@ Game::Game(Player& J, Player& S) {
 // simulates 3 turns for each player
 void Game::simulateRound()
 {
-	for (int i = 0; i < turnsPerRound * 2; i++) {
+	// simulates a turn for each player and flip flops between them
+	for (int i = 0; i < 2; i++) {
 		if (joesTurn) {
 			simulateTurn(Joe, Sid);
 			joesTurn = !joesTurn;
@@ -24,15 +25,17 @@ void Game::simulateRound()
 
 void Game::simulateTurn(Player* player, Player* oponent)
 {
-	int numsThrown[3] = { 0, 0, 0 };
+	player
+	for (int i = 0; i < turnsPerRound; i++){
+		player->incDartsThrown();
+		std::cout << player->getName() << std::endl;
 
-	std::cout << player->getName() << std::endl;
-		
-	if (player->getScore() % 2 != 0) {
-		switch(player.)
-	}
-	else {
+		if (player->getScore() % 2 != 0) {
 
+		}
+		else {	
+			dartboard.bull(player->getAccuracy());
+		}
 	}
 }
 
@@ -41,12 +44,13 @@ bool Game::whoGoesFirst()
 {
 	int jRoll, sRoll;
 
-	do {
-		// subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy 
-		// because the radius of their possible throws will be between "0" (the bull)
-		// and "100 - the accuracy". This gives the higher accuracy a better chance of hitting the bull and going first.
-			sRoll = dartboard.roll(100 - Sid->getAccuracy());
-			jRoll = dartboard.roll(100 - Joe->getAccuracy());
+	/*	subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy 
+		because the radius of their possible throws will be between "0" (the bull) and "100 - the accuracy". 
+		This gives the higher accuracy a better chance of hitting the bull and going first. */
+
+	do {		
+		sRoll = dartboard.roll(100 - Sid->getAccuracy());
+		jRoll = dartboard.roll(100 - Joe->getAccuracy());
 		if (jRoll < sRoll) { return true; }
 	} while (jRoll == sRoll);
 	
