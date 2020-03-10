@@ -3,7 +3,6 @@
 Player::Player(int a, std::string n) {
 	accuracy = a;
 	name = n;
-	State::neutral;
 	resetScore();
 	gamesWon = 0;
 	bullsHit = 0;
@@ -13,11 +12,14 @@ Player::Player(int a, std::string n) {
 Player::Player() {
 	accuracy = DEFAULT_ACCURACY;
 	name = " ";
-	State::neutral;
 	resetScore();
 }
 
 Player::~Player() {
+
+}
+
+State Player::getState(Player* oponent) {
 
 }
 

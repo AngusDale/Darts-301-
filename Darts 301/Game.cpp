@@ -12,24 +12,24 @@ void Game::simulateRound()
 {
 	for (int i = 0; i < turnsPerRound * 2; i++) {
 		if (joesTurn) {
-			simulateTurn(Joe);
+			simulateTurn(Joe, Sid);
 			joesTurn = !joesTurn;
 		}
 		else {
-			simulateTurn(Sid);
+			simulateTurn(Sid, Joe);
 			joesTurn = !joesTurn;
 		}
 	}
 }
 
-void Game::simulateTurn(Player* player)
+void Game::simulateTurn(Player* player, Player* oponent)
 {
 	int numsThrown[3] = { 0, 0, 0 };
 
 	std::cout << player->getName() << std::endl;
 		
 	if (player->getScore() % 2 != 0) {
-		//dartboard.single(player->getAccuracy(), 19);
+		switch(player.)
 	}
 	else {
 

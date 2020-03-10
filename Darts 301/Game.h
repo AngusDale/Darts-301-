@@ -12,7 +12,7 @@ public:
 	Dartboard dartboard;
 
 	void simulateRound();
-	void simulateTurn(Player*);
+	void simulateTurn(Player*, Player*);
 	bool whoGoesFirst();
 private:
 	int roundsSimulated;

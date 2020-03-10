@@ -30,6 +30,7 @@ public:
 	int getGamesWon();
 	void setGamesWon(int);
 	int getAccuracy();
+	State getState(Player*);
 	std::string getName();
 #pragma endregion
 
