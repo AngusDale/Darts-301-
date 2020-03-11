@@ -13,6 +13,7 @@ void Game::simulateRound()
 	// simulates a turn for each player and flip flops between them
 	for (int i = 0; i < 2; i++) {
 		if (joesTurn) {
+			Joe->setScore(199);
 			simulateTurn(Joe, Sid);
 			joesTurn = !joesTurn;
 		}
@@ -25,16 +26,25 @@ void Game::simulateRound()
 
 void Game::simulateTurn(Player* player, Player* oponent)
 {
-	player
+	// we save the player's score incase they go below 0 and need to reset their score to before their turn
+	player->setScoreBefore();
+	// sets the player's behaviour for the turn
+	player->setState(checkStandings(player, oponent));
 	for (int i = 0; i < turnsPerRound; i++){
 		player->incDartsThrown();
-		std::cout << player->getName() << std::endl;
-
+		std::cout << player->getName() << " " << player->printState() << std::endl;
+		
 		if (player->getScore() % 2 != 0) {
 
 		}
-		else {	
-			dartboard.bull(player->getAccuracy());
+		else {
+			switch (player->getState()) {
+			case State::behind: //dartboard.triple(player->getAccuracy())
+				break;
+			case State::neutral: dartboard.bull(player->getAccuracy());
+				break;
+			}
+			
 		}
 	}
 }
@@ -55,5 +65,13 @@ bool Game::whoGoesFirst()
 	} while (jRoll == sRoll);
 	
 	return false;
+}
+
+char Game::checkStandings(Player* p, Player* o)
+{
+	std::cout << p->getScore() << " " << o->getScore() << std::endl;
+	if (p->getScore() - o->getScore() > 100) { return 'b'; }
+	else if ((p->getScore() <= 40 && p->getScore() % 2 == 0) || p->getScore() == 50) { return 'f';	}
+	return 'n';
 }
 	

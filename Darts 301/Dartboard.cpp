@@ -11,7 +11,10 @@ int Dartboard::bull(int accuracy) {
 	// if the player misses the bullseye we check to see if their random roll was lower than the half way point between 100 and their accuracy
 	else if(rand <= accuracy + 10){
 		return RING;
-	}else if(rand <= accuracy )
+	}
+	else if (rand <= accuracy + 20) {
+		return numsOnBoard[roll(20)];
+	}
 	return 0;
 }
 

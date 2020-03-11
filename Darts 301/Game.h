@@ -14,6 +14,7 @@ public:
 	void simulateRound();
 	void simulateTurn(Player*, Player*);
 	bool whoGoesFirst();
+	char checkStandings(Player*, Player*);
 
 private:
 	int numThrown;

@@ -20,6 +20,7 @@ public:
 	State state;
 	void resetScore();
 
+	std::string printState();
 #pragma region Getters & Setters
 	int getDartsThrown();
 	void incDartsThrown();
@@ -28,7 +29,7 @@ public:
 	int getScore();
 	void setScore(int);
 	int getScoreBefore();
-	void setScoreBefore(int);
+	void setScoreBefore();
 	int getGamesWon();
 	void setGamesWon(int);
 	int getAccuracy();
