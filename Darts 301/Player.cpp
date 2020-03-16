@@ -35,6 +35,8 @@ void Player::resetScore() { score = STARTING_SCORE; }
 std::string Player::printState()
 {
 	switch (state) {
+	case State::ahead: return "AHEAD";
+		break;
 	case State::behind: return "BEHIND";
 		break;
 	case State::neutral: return "NEUTRAL";
@@ -49,6 +51,8 @@ std::string Player::printState()
 
 void Player::setState(char i) {
 	switch (i) {	
+	case 'a': state = State::ahead;
+		break;
 	case 'n': state = State::neutral;
 		break;
 	case 'b': state = State::behind;

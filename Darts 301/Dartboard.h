@@ -13,6 +13,7 @@ public:
 
 	int bull(int);
 	int single(int, int);
+	int _double(int, int);
 	int getThrowPosition(int);
 	int roll(int);
 private:

@@ -7,45 +7,38 @@ Game::Game(Player& J, Player& S) {
 	joesTurn = whoGoesFirst();
 }
 
-// simulates 3 turns for each player
+// simulates a round
 void Game::simulateRound()
 {
 	// simulates a turn for each player and flip flops between them
 	for (int i = 0; i < 2; i++) {
 		if (joesTurn) {
-			Joe->setScore(199);
+			// passes in Joe as the player and Sid as the oponent
 			simulateTurn(Joe, Sid);
 			joesTurn = !joesTurn;
 		}
 		else {
+			// passes in Sid as the player and Joe as the oponent
 			simulateTurn(Sid, Joe);
 			joesTurn = !joesTurn;
 		}
 	}
 }
 
+// simulates 3 turns for a player
 void Game::simulateTurn(Player* player, Player* oponent)
 {
 	// we save the player's score incase they go below 0 and need to reset their score to before their turn
 	player->setScoreBefore();
 	// sets the player's behaviour for the turn
 	player->setState(checkStandings(player, oponent));
-	for (int i = 0; i < turnsPerRound; i++){
-		player->incDartsThrown();
-		std::cout << player->getName() << " " << player->printState() << std::endl;
-		
-		if (player->getScore() % 2 != 0) {
 
-		}
-		else {
-			switch (player->getState()) {
-			case State::behind: //dartboard.triple(player->getAccuracy())
-				break;
-			case State::neutral: dartboard.bull(player->getAccuracy());
-				break;
-			}
-			
-		}
+	setThrows(player);
+
+	for (int i = 0; i < turnsPerRound; i++){
+		std::cout << player->getName() << " " << player->printState() << std::endl;
+		player->incDartsThrown();
+						
 	}
 }
 
@@ -55,8 +48,8 @@ bool Game::whoGoesFirst()
 	int jRoll, sRoll;
 
 	/*	subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy 
-		because the radius of their possible throws will be between "0" (the bull) and "100 - the accuracy". 
-		This gives the higher accuracy a better chance of hitting the bull and going first. */
+		because the lowest number rolled wins. You could think of this as each throw being a radius "0" (the bull) and "100 - the accuracy" being the outer circle. 
+		This gives the higher accuracy a better chance of hitting the bull and going first because it's more likely they'll roll a smaller number. */
 
 	do {		
 		sRoll = dartboard.roll(100 - Sid->getAccuracy());
@@ -67,11 +60,31 @@ bool Game::whoGoesFirst()
 	return false;
 }
 
-char Game::checkStandings(Player* p, Player* o)
+// sets the players state
+char Game::checkStandings(Player* _player, Player* _oponent)
 {
-	std::cout << p->getScore() << " " << o->getScore() << std::endl;
-	if (p->getScore() - o->getScore() > 100) { return 'b'; }
-	else if ((p->getScore() <= 40 && p->getScore() % 2 == 0) || p->getScore() == 50) { return 'f';	}
+	std::cout << _player->getScore() << " " << _oponent->getScore() << std::endl;
+
+	if (_player->getScore() - _oponent->getScore() > 80) { return 'b'; }
+	else if (_oponent->getScore() - _player->getScore() > 80) { return 'a'; }
+	else if ((_player->getScore() <= 40 && _player->getScore() % 2 == 0) || _player->getScore() == 50) { return 'f';	}
 	return 'n';
+}
+
+// sets what each player is going to throw for each turn
+void Game::setThrows(Player* _player) {
+	switch (_player->getState()) {
+	case State::neutral:
+		if()
+			break;
+	}
+}
+
+bool Game::isGameWon(Player* _player)
+{
+	if (_player->getScore() == 0) {
+		return true
+	}
+	return false;
 }
 	

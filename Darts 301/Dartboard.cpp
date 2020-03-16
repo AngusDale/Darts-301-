@@ -42,6 +42,11 @@ int Dartboard::single(int accuracy, int throwFor) {
 	return 0;
 }
 
+int Dartboard::_double(int, int)
+{
+	return 0;
+}
+
 // finds the number we threw for on the board
 int Dartboard::getThrowPosition(int x) {
 	for (int i = 0; i < NUMBER_OF_SCORES; i++) {

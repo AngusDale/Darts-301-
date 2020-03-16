@@ -8,7 +8,8 @@
 enum class State {
 	neutral = 0,
 	behind,
-	final_shot
+	final_shot,
+	ahead
 };
 
 class Player
@@ -18,9 +19,12 @@ public:
 	Player();
 	~Player();
 	State state;
-	void resetScore();
 
+	int throws[3];
+
+	void resetScore();
 	std::string printState();
+
 #pragma region Getters & Setters
 	int getDartsThrown();
 	void incDartsThrown();
