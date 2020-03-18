@@ -25,7 +25,7 @@ int Dartboard::single(int accuracy, int throwFor) {
 		return throwFor;
 	}
 	else { 		
-		// if the player misses we check the number they were throwing for
+		// if the player misses we check the position of the number they were throwing for
 		int position = getThrowPosition(throwFor);
 		
 		// we see if the random num generated earlier was even or odd to dictate which side the player missed to
@@ -44,6 +44,11 @@ int Dartboard::single(int accuracy, int throwFor) {
 
 int Dartboard::_double(int, int)
 {
+	return 0 * 2;
+}
+
+int Dartboard::triple(int, int)
+{
 	return 0;
 }
 
@@ -60,4 +65,31 @@ int Dartboard::getThrowPosition(int x) {
 int Dartboard::roll(int x) {
 	int roll = rand() % x + 1;
 	return roll;
+}
+
+bool Dartboard::validFinisher(int score)
+{
+	for (int x = 2; x <= 3; x++) {
+		for (int i = 0; i < NUMBER_OF_SCORES; i++) {
+			if (score == numsOnBoard[i] * x || score == 50) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+// gets the highest possible throw the player can make 
+int Dartboard::getHighestThrow(int score)
+{
+	int temp = score;
+	int multiplier;
+	for (multiplier = 1; multiplier <= 3; multiplier++) {
+		for (int i = 0; i < NUMBER_OF_SCORES; i++) {
+			if (score - numsOnBoard[i] * multiplier < temp && score - numsOnBoard[i] * multiplier > 1) {
+				temp = score - numsOnBoard[i] * multiplier;
+			}
+		}
+	}
+	return temp * multiplier;
 }

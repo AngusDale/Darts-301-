@@ -19,9 +19,7 @@ public:
 	Player();
 	~Player();
 	State state;
-
-	int throws[3];
-
+	
 	void resetScore();
 	std::string printState();
 

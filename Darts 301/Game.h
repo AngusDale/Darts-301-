@@ -10,13 +10,15 @@ public:
 	Player* Joe;
 	Player* Sid;
 	Dartboard dartboard;
+	
+	int throws[3];
 
 	void simulateRound();
 	void simulateTurn(Player*, Player*);
 	bool whoGoesFirst();
 	char checkStandings(Player*, Player*);
 	void setThrows(Player*);
-	bool isGameWon(Player*);
+	bool isGameWon(Player*);	
 
 private:
 	int numThrown;

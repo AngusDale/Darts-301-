@@ -7,6 +7,8 @@ Game::Game(Player& J, Player& S) {
 	joesTurn = whoGoesFirst();
 }
 
+
+
 // simulates a round
 void Game::simulateRound()
 {
@@ -25,20 +27,52 @@ void Game::simulateRound()
 	}
 }
 
-// simulates 3 turns for a player
+// simulates 3 throws for a player
 void Game::simulateTurn(Player* player, Player* oponent)
 {
 	// we save the player's score incase they go below 0 and need to reset their score to before their turn
 	player->setScoreBefore();
-	// sets the player's behaviour for the turn
-	player->setState(checkStandings(player, oponent));
-
-	setThrows(player);
 
 	for (int i = 0; i < turnsPerRound; i++){
-		std::cout << player->getName() << " " << player->printState() << std::endl;
-		player->incDartsThrown();
-						
+		std::cout << player->getName() << " " << player->getScore() << std::endl;
+		player->incDartsThrown();	
+
+		if (player->getScore() >= 60) {
+			numThrown = dartboard.triple(player->getAccuracy(), 20);
+			player->setScore(player->getScore() - numThrown);
+			isGameWon(player);
+		}
+		else {
+			if (player->getScore() > 50) {
+				numThrown = dartboard.single(player->getAccuracy(), player->getScore() % 50);
+				player->setScore(player->getScore() - numThrown);
+			}
+			else if (player->getScore() == 50) {
+				numThrown = dartboard.bull(player->getAccuracy());
+				player->incBullsHit();
+				player->setScore(player->getScore() - numThrown);
+			}
+			else {
+				if (player->getScore() > 40) {
+					numThrown = dartboard.single(player->getAccuracy(), player->getScore() % 40);
+					player->setScore(player->getScore() - numThrown);
+				}
+				else {
+					if (player->getScore() % 2 == 0) {
+						numThrown = dartboard._double(player->getAccuracy(), player->getScore() / 2);
+						player->setScore(player->getScore() - numThrown);
+					}
+					else {
+						numThrown = dartboard.single(player->getAccuracy(), 1);
+						player->setScore(player->getScore() - numThrown);
+					}
+				}
+			}
+		}
+	}
+
+	if (player->getScore() < 0 || player->getScore() == 1) {
+		player->setScore(player->getScoreBefore());
 	}
 }
 
@@ -71,19 +105,10 @@ char Game::checkStandings(Player* _player, Player* _oponent)
 	return 'n';
 }
 
-// sets what each player is going to throw for each turn
-void Game::setThrows(Player* _player) {
-	switch (_player->getState()) {
-	case State::neutral:
-		if()
-			break;
-	}
-}
-
 bool Game::isGameWon(Player* _player)
 {
-	if (_player->getScore() == 0) {
-		return true
+	if (_player->getScore() - numThrown == 0) {
+		return true;
 	}
 	return false;
 }
