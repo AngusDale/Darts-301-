@@ -18,10 +18,10 @@ public:
 	Player(int a, std::string n);
 	Player();
 	~Player();
-	State state;
-	
+	State state;	
+
 	void resetScore();
-	std::string printState();
+	std::string getStringState();
 
 #pragma region Getters & Setters
 	int getDartsThrown();
@@ -32,6 +32,8 @@ public:
 	void setScore(int);
 	int getScoreBefore();
 	void setScoreBefore();
+	int getRoundsWon();
+	void setRoundsWon(int);
 	int getGamesWon();
 	void setGamesWon(int);
 	int getAccuracy();
@@ -46,6 +48,7 @@ private:
 	int bullsHit;
 	int score;
 	int scoreBefore;
+	int roundsWon;
 	int gamesWon;
 	std::string name;
 	int accuracy;

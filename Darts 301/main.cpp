@@ -25,9 +25,7 @@ int main() {
 
 	for (int i = 0; i < sims; i++) {
 		Game game(Joe, Sid);
-		do {
-			game.simulateRound();
-		} while ();
+		game.simulateGame();
 	}
 
 	//printStats(Joe);

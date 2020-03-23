@@ -32,7 +32,7 @@ Player::~Player() {
 
 void Player::resetScore() { score = STARTING_SCORE; }
 
-std::string Player::printState()
+std::string Player::getStringState()
 {
 	switch (state) {
 	case State::ahead: return "AHEAD";
@@ -65,8 +65,10 @@ void Player::setState(char i) {
 }
 
 #pragma region Getters & Setters
-int Player::getScoreBefore()	{ return scoreBefore; }
-void Player::setScoreBefore()	{ scoreBefore = getScore(); }
+int Player::getScoreBefore()		{ return scoreBefore; }
+void Player::setScoreBefore()		{ scoreBefore = getScore(); }
+int Player::getRoundsWon()			{ return roundsWon; }
+void Player::setRoundsWon(int rnds) { roundsWon = rnds; }
 int Player::getScore()				{ return score; }
 void Player::setScore(int hits)		{ score = hits; }
 int Player::getBullsHit()			{ return bullsHit; }

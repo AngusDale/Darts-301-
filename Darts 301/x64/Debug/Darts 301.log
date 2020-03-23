@@ -1,3 +1,2 @@
-﻿  Dartboard.cpp
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\Dartboard.cpp(62): warning C4715: 'Dartboard::getThrowPosition': not all control paths return a value
+﻿  Game.cpp
   Darts 301.vcxproj -> C:\Users\Angus D\source\repos\Darts-301-\x64\Debug\Darts 301.exe
