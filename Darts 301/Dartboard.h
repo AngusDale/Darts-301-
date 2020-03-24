@@ -15,7 +15,6 @@ public:
 	int single(int, int);
 	int _double(int, int);
 	int triple(int, int);
-	int getThrowPosition(int);
 	int roll(int);
 	int getNeighbor(int, int);
 	bool validFinisher(int);

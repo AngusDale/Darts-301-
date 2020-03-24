@@ -18,8 +18,8 @@ void printStats(Player player) {
 
 int main() {
 	srand(time(NULL));
-	Player Joe(70, "Joe");
-	Player Sid(70, "Sid");	
+	Player Joe(70, "Joe", 0);
+	Player Sid(70, "Sid", 10);	
 
 	int sims = 1; //simCount();
 

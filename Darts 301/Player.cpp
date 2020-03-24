@@ -1,11 +1,12 @@
 #include "Player.h"
 
-Player::Player(int a, std::string n) {
+Player::Player(int a, std::string n, int c) {
 	accuracy = a;
 	name = n;	
 	gamesWon = 0;
 	bullsHit = 0;
 	dartsThrown = 0;
+	cursorPos = c;
 
 	State state;
 	state = State::neutral;
@@ -65,8 +66,6 @@ void Player::setState(char i) {
 }
 
 #pragma region Getters & Setters
-int Player::getScoreBefore()		{ return scoreBefore; }
-void Player::setScoreBefore()		{ scoreBefore = getScore(); }
 int Player::getRoundsWon()			{ return roundsWon; }
 void Player::setRoundsWon(int rnds) { roundsWon = rnds; }
 int Player::getScore()				{ return score; }

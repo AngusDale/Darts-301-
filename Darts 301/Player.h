@@ -15,7 +15,7 @@ enum class State {
 class Player
 {
 public:	
-	Player(int a, std::string n);
+	Player(int a, std::string n, int c);
 	Player();
 	~Player();
 	State state;	
@@ -30,8 +30,6 @@ public:
 	void incBullsHit();
 	int getScore();
 	void setScore(int);
-	int getScoreBefore();
-	void setScoreBefore();
 	int getRoundsWon();
 	void setRoundsWon(int);
 	int getGamesWon();
@@ -44,10 +42,10 @@ public:
 #pragma endregion
 
 private: 
+	int cursorPos;
 	int dartsThrown;
 	int bullsHit;
 	int score;
-	int scoreBefore;
 	int roundsWon;
 	int gamesWon;
 	std::string name;

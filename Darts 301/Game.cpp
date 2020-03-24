@@ -5,10 +5,13 @@ Game::Game(Player& J, Player& S) {
 	Sid = &S;
 	roundsSimulated = 0;
 	joesTurn = whoGoesFirst();
+
+	roundIsWon = false;
+	_numThrown = &numThrown;
 }
 
 void Game::simulateGame() {
-	do {
+	do {		
 		simulateRound();
 	} while (/*gameIsWon()*/ false);
 }
@@ -16,6 +19,7 @@ void Game::simulateGame() {
 // simulates a round
 void Game::simulateRound()
 {
+	std::cout << Joe->getName() << " - " << Sid->getName() << std::endl;
 	do {
 		// simulates a turn for each player and flip flops between them
 		for (int i = 0; i < 2; i++) {
@@ -23,39 +27,48 @@ void Game::simulateRound()
 				// passes in Joe as the player
 				simulateTurn(Joe);
 				joesTurn = !joesTurn;
+
+				if (roundIsWon)
+					break;
 			}
 			else {
 				// passes in Sid as the player
 				simulateTurn(Sid);
 				joesTurn = !joesTurn;
+
+				if (roundIsWon)
+					break;
 			}
 		}
-	} while (roundIsWon);
+
+	} while (!roundIsWon);
 }
 
 // simulates 3 throws for a player
 void Game::simulateTurn(Player* player)
 {
 	// we save the player's score incase they go below 0 and need to reset their score to before their turn
-	player->setScoreBefore();
+	scoreBefore = player->getScore();
 
 	for (int i = 0; i < turnsPerRound; i++){
 		
 		player->incDartsThrown(); // increments dartsThrown
 
 		numThrown = getThrow(player);
-		if (numThrown == 50) { player->incBullsHit(); } //increments bullsHit if the player hits a bullseye
-		player->setScore(player->getScore() - numThrown); // decreases the player's score
 		
-
-		std::cout << i + 1 <<": " << player->getName() << " " << numThrown << " " << player->getScore() << std::endl;
+		if (numThrown == 50) { player->incBullsHit(); } //increments bullsHit if the player hits a bullseye
+		player->setScore(player->getScore() - numThrown); // decreases the player's score		
 
 		// checks to see if the player's score needs to be reset
-		if (player->getScore() < 0 || player->getScore() == 1 || (player->getScore() == 0 && !dartboard.threwDouble)) {
-			player->setScore(player->getScoreBefore());
+		if (player->getScore() < 0 || player->getScore() == 1) {
+			player->setScore(scoreBefore);
 			// ends the player's turn but allows the loop to finish its iteration
 			i = turnsPerRound + 1;
+		} // if it doesn't need to be reset then it checks to see if they won the round
+		else {
+			isRoundWon(player);
 		}
+		std::cout << i + 1 << ": " << player->getName() << " " << numThrown << " " << player->getScore() << std::endl;
 	}
 	std::cout << std::endl;	
 }
@@ -105,9 +118,11 @@ bool Game::whoGoesFirst()
 	return false;
 }
 
-void Game::setRoundIsWon()
+void Game::isRoundWon(Player* player)
 {
-	
+	if (player->getScore() == 0 && dartboard.threwDouble) {
+		roundIsWon = true;
+	}
 }
 
 bool Game::gameIsWon()

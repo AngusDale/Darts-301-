@@ -2,6 +2,7 @@
 
 Dartboard::Dartboard() {
 	gameIsWon = false;
+	threwDouble = false;
 }
 
 // throws for the bullseye
@@ -67,7 +68,7 @@ int Dartboard::triple(int accuracy, int throwFor)
 	int rand = roll(100);
 	// accuracy is devided by 2 only for the triple tile due to it's physical size
 	if (rand <= accuracy / 2) {
-		return throwFor * 2;
+		return throwFor * 3;
 	}
 	else if (rand <= accuracy) {
 		return throwFor;
@@ -109,10 +110,7 @@ int Dartboard::getNeighbor(int num, int rand)
 	return 0;
 }
 
-// finds the number we threw for on the board
-int Dartboard::getThrowPosition(int x) {
-	
-}
+
 
 // roll a random number
 int Dartboard::roll(int x) {

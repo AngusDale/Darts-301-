@@ -2,6 +2,7 @@
 #include "Dartboard.h"
 #include "Player.h"
 #include <iostream>
+#include <windows.h>
 
 #define ROUNDS_TO_WIN 7
 
@@ -18,11 +19,16 @@ public:
 	void simulateTurn(Player*);
 	int getThrow(Player*);
 	bool whoGoesFirst();
-	void setRoundIsWon();
+	void isRoundWon(Player*);
 	bool gameIsWon();	
 
+	// allows me to control cursor position and hide it
+	HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 private:
+	int* _numThrown;
 	int numThrown;
+	int scoreBefore;
 	int roundsSimulated;
 	static const int turnsPerRound = 3;
 	bool roundIsWon;
