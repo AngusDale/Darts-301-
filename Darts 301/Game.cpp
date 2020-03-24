@@ -7,19 +7,19 @@ Game::Game(Player& J, Player& S) {
 	joesTurn = whoGoesFirst();
 
 	roundIsWon = false;
-	_numThrown = &numThrown;
+
+	hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-void Game::simulateGame() {
+void Game::simulateSet() {
 	do {		
 		simulateRound();
-	} while (/*gameIsWon()*/ false);
+	} while (setIsWon());
 }
 
 // simulates a round
 void Game::simulateRound()
 {
-	std::cout << Joe->getName() << " - " << Sid->getName() << std::endl;
 	do {
 		// simulates a turn for each player and flip flops between them
 		for (int i = 0; i < 2; i++) {
@@ -27,17 +27,19 @@ void Game::simulateRound()
 				// passes in Joe as the player
 				simulateTurn(Joe);
 				joesTurn = !joesTurn;
-
+				
+				// breaks the loop if the round is won
 				if (roundIsWon)
-					break;
+					i = 3;
 			}
 			else {
 				// passes in Sid as the player
 				simulateTurn(Sid);
 				joesTurn = !joesTurn;
 
+				// breaks the loop if the round is won
 				if (roundIsWon)
-					break;
+					i = 3;
 			}
 		}
 
@@ -59,46 +61,42 @@ void Game::simulateTurn(Player* player)
 		if (numThrown == 50) { player->incBullsHit(); } //increments bullsHit if the player hits a bullseye
 		player->setScore(player->getScore() - numThrown); // decreases the player's score		
 
+		std::cout << player->getName() << " " << numThrown << " " << player->getScore() << std::endl;
+
 		// checks to see if the player's score needs to be reset
 		if (player->getScore() < 0 || player->getScore() == 1) {
 			player->setScore(scoreBefore);
-			// ends the player's turn but allows the loop to finish its iteration
-			i = turnsPerRound + 1;
-		} // if it doesn't need to be reset then it checks to see if they won the round
-		else {
-			isRoundWon(player);
-		}
-		std::cout << i + 1 << ": " << player->getName() << " " << numThrown << " " << player->getScore() << std::endl;
-	}
-	std::cout << std::endl;	
+			// ends the player's turn
+			i = 5;
+		} else if (player->getScore() == 0){ // if it doesn't need to be reset then it checks to see if they won the round			
+			roundIsWon = isRoundWon(player);
+			if (roundIsWon) { i = 5; }
+		}		
+	}	
+	std::cout << std::endl;
 }
 
 // returns the number the player threw
 int Game::getThrow(Player* player)
 {
-	if (player->getScore() > 60) {
+	if (player->getScore() > 71) {
 		return dartboard.triple(player->getAccuracy(), 20);
 	}
-	else {
-		if (player->getScore() > 50) {
-			return dartboard.single(player->getAccuracy(), player->getScore() % 50);
-		}
-		else if (player->getScore() == 50) {
-			return dartboard.bull(player->getAccuracy());
-		}
-		else {
-			if (player->getScore() > 40) {
-				return dartboard.single(player->getAccuracy(), player->getScore() % 40);
-			}
-			else {
-				if (player->getScore() % 2 == 0) {
-					return dartboard._double(player->getAccuracy(), player->getScore() / 2);
-				}
-				else { return dartboard.single(player->getAccuracy(), 1); }
-			}
-		}
+	else if (player->getScore() > 50) {
+		return dartboard.single(player->getAccuracy(), player->getScore() % 50);
 	}
+	else if (player->getScore() == 50) {
+		return dartboard.bull(player->getAccuracy());
+	}
+	else if (player->getScore() > 40) {
+		return dartboard.single(player->getAccuracy(), player->getScore() % 40);
+	}
+	else if (player->getScore() % 2 == 0) {
+		return dartboard._double(player->getAccuracy(), player->getScore() / 2);
+	}
+	else { return dartboard.single(player->getAccuracy(), 1); }
 }
+
 
 // decides who goes first at the beginning of each game
 bool Game::whoGoesFirst()
@@ -118,15 +116,27 @@ bool Game::whoGoesFirst()
 	return false;
 }
 
-void Game::isRoundWon(Player* player)
+bool Game::isRoundWon(Player* player)
 {
-	if (player->getScore() == 0 && dartboard.threwDouble) {
-		roundIsWon = true;
+	if (dartboard.winningThrow) {
+		player->setRoundsWon(player->getRoundsWon() + 1);
+		std::cout << std::endl << player->getName() << " has won! " << player->getRoundsWon() << std::endl;
+
+		return true;
 	}
+	return false;	
 }
 
-bool Game::gameIsWon()
+bool Game::setIsWon()
 {
+	if (Joe->getRoundsWon == 7) {
+		Joe->setSetsWon(Joe->getSetsWon() + 1);
+		return true;
+	}
+	else if (Sid->getRoundsWon == 7) {
+		Joe->setSetsWon(Joe->getSetsWon() + 1);
+		return true;
+		}
 	return false;
 }
 	

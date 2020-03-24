@@ -4,7 +4,8 @@
 #include <iostream>
 #include <windows.h>
 
-#define ROUNDS_TO_WIN 7
+#define SETS_TO_WIN_MATCH 7
+#define ROUNDS_TO_WIN_SET 3 
 
 class Game
 {
@@ -14,24 +15,24 @@ public:
 	Player* Sid;
 	Dartboard dartboard;	
 
-	void simulateGame(); // one match is first to 7 games won
-	void simulateRound(); // one round is 3 turns per player
+	void simulateMatch(); // one match is first to 7 sets won
+	void simulateSet(); // one set is first to 3 rounds won
+	void simulateRound(); // one round is 3 turns per player from 501 to 0
 	void simulateTurn(Player*);
 	int getThrow(Player*);
 	bool whoGoesFirst();
-	void isRoundWon(Player*);
-	bool gameIsWon();	
+	bool isRoundWon(Player*);
+	bool setIsWon();	
 
 	// allows me to control cursor position and hide it
-	HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hconsole;
 
 private:
-	int* _numThrown;
 	int numThrown;
 	int scoreBefore;
 	int roundsSimulated;
 	static const int turnsPerRound = 3;
 	bool roundIsWon;
-	bool joesTurn;
+	bool joesTurn;								
 };
 

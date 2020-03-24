@@ -2,12 +2,12 @@
 
 Dartboard::Dartboard() {
 	gameIsWon = false;
-	threwDouble = false;
+	winningThrow = false;
 }
 
 // throws for the bullseye
 int Dartboard::bull(int accuracy) {	
-	threwDouble = false;
+	winningThrow = true;
 	int rand = roll(100);
 	if (rand <= accuracy) { return BULLSEYE; }
 	// if the player misses the bullseye we check to see if their random roll was lower than the half way point between 100 and their accuracy
@@ -23,7 +23,7 @@ int Dartboard::bull(int accuracy) {
 
 // throws for a single number excluding the bullseye
 int Dartboard::single(int accuracy, int throwFor) {
-	threwDouble = false;
+	winningThrow = false;
 	int rand = roll(100);
 	if (rand <= accuracy) {
 		return throwFor;
@@ -40,21 +40,21 @@ int Dartboard::_double(int accuracy, int throwFor)
 {
 	int rand = roll(100);
 	if (throwFor <= 20) {
-		if (rand <= accuracy / 2) {
-			threwDouble = true;
+		if (rand <= accuracy - 10) {
+			winningThrow = true;
 			return throwFor * 2;			
 		}
-		else if (rand <= (accuracy / 2) + 15) {
-			threwDouble = false;
+		else if (rand <= accuracy + 5) {
+			winningThrow = false;
 			return throwFor;
 		}
-		else if (rand <= (accuracy / 2) + 20) {
+		else if (rand <= accuracy + 10) {
 			if (rand % 4 == 0) {
-				threwDouble = false;
+				winningThrow = false;
 				return getNeighbor(throwFor, rand) * 2;
 			}
 			else {
-				threwDouble = false;
+				winningThrow = false;
 				return getNeighbor(throwFor, rand);
 			}
 		}		
@@ -64,16 +64,16 @@ int Dartboard::_double(int accuracy, int throwFor)
 
 int Dartboard::triple(int accuracy, int throwFor)
 {
-	threwDouble = false;
+	winningThrow = false;
 	int rand = roll(100);
 	// accuracy is devided by 2 only for the triple tile due to it's physical size
-	if (rand <= accuracy / 2) {
+	if (rand <= accuracy - 10) {
 		return throwFor * 3;
 	}
 	else if (rand <= accuracy) {
 		return throwFor;
 	}
-	else if (rand <= accuracy + 20) {
+	else if (rand <= accuracy + 10) {
 		if (rand % 4 == 0) {
 			return getNeighbor(throwFor, rand) * 3;
 		}

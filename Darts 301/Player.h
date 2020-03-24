@@ -15,39 +15,49 @@ enum class State {
 class Player
 {
 public:	
-	Player(int a, std::string n, int c);
+	Player(int a, std::string n);
 	Player();
 	~Player();
 	State state;	
 
-	void resetScore();
+	void reset();
 	std::string getStringState();
 
+	// when a set is finished, the amount of rounds they won will be recorded except for 7 sets won. This keeps track of the amount of losses and how many sets were won during that loss
+	int setLossTracker[6];
+
 #pragma region Getters & Setters
+
 	int getDartsThrown();
 	void incDartsThrown();
 	int getBullsHit();
 	void incBullsHit();
-	int getScore();
-	void setScore(int);
+	
+
 	int getRoundsWon();
 	void setRoundsWon(int);
-	int getGamesWon();
-	void setGamesWon(int);
+	int getSetsWon();
+	void setSetsWon(int);
+	int getMatchesWon();
+	void incMatchesWon();
+
+	int getScore();
+	void setScore(int);
 	int getAccuracy();
 	void setState(char);
 	State getState();
-
 	std::string getName();
+	
 #pragma endregion
 
 private: 
-	int cursorPos;
+	
 	int dartsThrown;
 	int bullsHit;
 	int score;
 	int roundsWon;
-	int gamesWon;
+	int setsWon;
+	int matchesWon;
 	std::string name;
 	int accuracy;
 };

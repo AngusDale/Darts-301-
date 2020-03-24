@@ -12,20 +12,20 @@ int simCount() {
 
 void printStats(Player player) {
 	std::cout << player.getName() << ":" << std::endl;
-	std::cout << player.getGamesWon() << std::endl;
+	std::cout << player.getSetsWon() << std::endl;
 	std::cout << player.getBullsHit() << std::endl;
 }
 
 int main() {
 	srand(time(NULL));
-	Player Joe(70, "Joe", 0);
-	Player Sid(70, "Sid", 10);	
+	Player Joe(70, "Joe"); // accuracy, name
+	Player Sid(75, "Sid");	
 
 	int sims = 1; //simCount();
 
 	for (int i = 0; i < sims; i++) {
 		Game game(Joe, Sid);
-		game.simulateGame();
+		game.simulateSet();
 	}
 
 	//printStats(Joe);
