@@ -21,10 +21,12 @@ public:
 	State state;	
 
 	void reset();
+	void resetScore();
 	std::string getStringState();
+	void recordSetsWon();
 
 	// when a set is finished, the amount of rounds they won will be recorded except for 7 sets won. This keeps track of the amount of losses and how many sets were won during that loss
-	int setLossTracker[6];
+	int setsWonDuringLoss[7];
 
 #pragma region Getters & Setters
 
@@ -41,6 +43,11 @@ public:
 	int getMatchesWon();
 	void incMatchesWon();
 
+	int getTotalRoundsWon();
+	void setTotalRoundsWon();
+	int getTotalSetsWon();
+	void setTotalSetsWon();
+
 	int getScore();
 	void setScore(int);
 	int getAccuracy();
@@ -55,9 +62,15 @@ private:
 	int dartsThrown;
 	int bullsHit;
 	int score;
+
 	int roundsWon;
 	int setsWon;
 	int matchesWon;
+
+	int totalRoundsWon;
+	int totalSetsWon;
+
+
 	std::string name;
 	int accuracy;
 };

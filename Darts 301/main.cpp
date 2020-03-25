@@ -7,6 +7,7 @@ int simCount() {
 	std::cout << "How many simulations would you like to run?" << std::endl;
 	int simcount = 0;
 	std::cin >> simcount;
+	system("cls");
 	return simcount;
 }
 
@@ -22,10 +23,9 @@ int main() {
 	Player Sid(75, "Sid");	
 
 	int sims = 1; //simCount();
-
-	for (int i = 0; i < sims; i++) {
-		Game game(Joe, Sid);
-		game.simulateSet();
+	Game game(Joe, Sid);
+	for (int i = 0; i < sims; i++) {		
+		game.simulateMatch();
 	}
 
 	//printStats(Joe);

@@ -19,18 +19,23 @@ public:
 	void simulateSet(); // one set is first to 3 rounds won
 	void simulateRound(); // one round is 3 turns per player from 501 to 0
 	void simulateTurn(Player*);
+
 	int getThrow(Player*);
 	bool whoGoesFirst();
+
 	bool isRoundWon(Player*);
 	bool setIsWon();	
+	bool matchIsWon();
 
-	// allows me to control cursor position and hide it
-	HANDLE hconsole;
+	void updateCounters(Player*);
+	void printStats(Player*);
 
 private:
 	int numThrown;
 	int scoreBefore;
 	int roundsSimulated;
+	int setsSimulated;
+	int matchesSimulated;
 	static const int turnsPerRound = 3;
 	bool roundIsWon;
 	bool joesTurn;								

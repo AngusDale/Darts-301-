@@ -3,18 +3,43 @@
 Game::Game(Player& J, Player& S) {	
 	Joe = &J;
 	Sid = &S;
-	roundsSimulated = 0;
-	joesTurn = whoGoesFirst();
+	roundsSimulated = 0;	
 
 	roundIsWon = false;
+}
 
-	hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+void Game::simulateMatch()
+{
+	joesTurn = whoGoesFirst();
+
+	// loops until the player has reached 7 sets won (best of 13)
+	do {
+		simulateSet();
+	} while (!matchIsWon());
+
+	// increments matches won if setsWon = 7
+	Joe->recordSetsWon();
+	Sid->recordSetsWon();	
 }
 
 void Game::simulateSet() {
-	do {		
+	
+
+	// loops until a player reaches 3 rounds won (best of 5)
+	do {	
 		simulateRound();
-	} while (setIsWon());
+
+		// resets the player's score back to the starting number
+		Joe->resetScore();
+		Sid->resetScore();
+	} while (!setIsWon());	
+
+	updateCounters(Joe);
+	updateCounters(Sid);
+
+	system("cls");
+	printStats(Joe);
+	printStats(Sid);
 }
 
 // simulates a round
@@ -42,8 +67,8 @@ void Game::simulateRound()
 					i = 3;
 			}
 		}
-
-	} while (!roundIsWon);
+	} while (!roundIsWon);	
+	roundIsWon = false;
 }
 
 // simulates 3 throws for a player
@@ -58,10 +83,10 @@ void Game::simulateTurn(Player* player)
 
 		numThrown = getThrow(player);
 		
-		if (numThrown == 50) { player->incBullsHit(); } //increments bullsHit if the player hits a bullseye
+		if (numThrown == 50) { player->incBullsHit(); } // increments bullsHit if the player hits a bullseye
 		player->setScore(player->getScore() - numThrown); // decreases the player's score		
 
-		std::cout << player->getName() << " " << numThrown << " " << player->getScore() << std::endl;
+		//std::cout << player->getName() << " " << numThrown << " " << player->getScore() << std::endl;
 
 		// checks to see if the player's score needs to be reset
 		if (player->getScore() < 0 || player->getScore() == 1) {
@@ -73,7 +98,7 @@ void Game::simulateTurn(Player* player)
 			if (roundIsWon) { i = 5; }
 		}		
 	}	
-	std::cout << std::endl;
+	//std::cout << std::endl;
 }
 
 // returns the number the player threw
@@ -120,23 +145,52 @@ bool Game::isRoundWon(Player* player)
 {
 	if (dartboard.winningThrow) {
 		player->setRoundsWon(player->getRoundsWon() + 1);
-		std::cout << std::endl << player->getName() << " has won! " << player->getRoundsWon() << std::endl;
+		//std::cout << std::endl << player->getName() << " has won! " << std::endl;
 
 		return true;
 	}
 	return false;	
 }
 
+// checks to see if a player has reached 3 rounds won, and increments the sets won counter
 bool Game::setIsWon()
 {
-	if (Joe->getRoundsWon == 7) {
+	if (Joe->getRoundsWon() == ROUNDS_TO_WIN_SET) {
 		Joe->setSetsWon(Joe->getSetsWon() + 1);
 		return true;
 	}
-	else if (Sid->getRoundsWon == 7) {
-		Joe->setSetsWon(Joe->getSetsWon() + 1);
+	else if (Sid->getRoundsWon() == ROUNDS_TO_WIN_SET) {
+		Sid->setSetsWon(Sid->getSetsWon() + 1);
 		return true;
-		}
+	}
 	return false;
+}
+
+// checks if a player has reached 7 sets won
+bool Game::matchIsWon() {
+	if (Joe->getSetsWon() == SETS_TO_WIN_MATCH) {
+		return true;
+	}
+	else if (Sid->getSetsWon() == SETS_TO_WIN_MATCH) {
+		return true;
+	}
+	return false;
+}
+
+void Game::updateCounters(Player* player){
+	player->setTotalRoundsWon();
+	player->setTotalSetsWon();
+	player->setRoundsWon(0);
+}
+
+void Game::printStats(Player* player)
+{
+	std::cout << player->getName() << "\n";
+	std::cout << "Matches Won: " << player->getMatchesWon() << "\n";
+	std::cout << "Rounds Won: " << player->getTotalRoundsWon() << "\n";
+	std::cout << "Sets Won: " << player->getTotalSetsWon() << "\n";
+	std::cout << "Darts Thrown: " << player->getDartsThrown() << "\n";
+	std::cout << "Bulls Hit: " << player->getBullsHit() << "\n";
+	std::cout << std::endl;
 }
 	
