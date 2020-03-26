@@ -23,7 +23,8 @@ void Game::simulateMatch()
 }
 
 void Game::simulateSet() {
-	
+	Joe->setRoundsWon(0);
+	Sid->setRoundsWon(0);
 
 	// loops until a player reaches 3 rounds won (best of 5)
 	do {	
@@ -45,6 +46,9 @@ void Game::simulateSet() {
 // simulates a round
 void Game::simulateRound()
 {
+
+	roundIsWon = false;
+
 	do {
 		// simulates a turn for each player and flip flops between them
 		for (int i = 0; i < 2; i++) {
@@ -68,7 +72,6 @@ void Game::simulateRound()
 			}
 		}
 	} while (!roundIsWon);	
-	roundIsWon = false;
 }
 
 // simulates 3 throws for a player
@@ -180,7 +183,7 @@ bool Game::matchIsWon() {
 void Game::updateCounters(Player* player){
 	player->setTotalRoundsWon();
 	player->setTotalSetsWon();
-	player->setRoundsWon(0);
+	
 }
 
 void Game::printStats(Player* player)
