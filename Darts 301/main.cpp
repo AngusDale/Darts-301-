@@ -2,7 +2,12 @@
 #include "Player.h"
 #include <iostream>
 #include <time.h> 
+#include <windows.h>
 
+// for controling cursor position
+HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+// asks how many simulations to execute
 int simCount() {
 	std::cout << "How many simulations would you like to run?" << std::endl;
 	int simcount = 0;
@@ -13,31 +18,51 @@ int simCount() {
 
 // prints the stats of each player
 void printStats(Player p1, Player p2, Game g) {
-	/**/
-
-	std::cout << "Matches Simulated: " << g.getMatchesSimulated() << std::endl;
-	std::cout << p1.getName() << " won: " << p1.getMatchesWon() << std::endl;
-	std::cout << p2.getName() << " won: " << p2.getMatchesWon() << std::endl << std::endl;
-	std::cout << "J" << "-" << "S" << std::endl;	
+	// keeps track of the cursor's y position
+	SHORT line = 1;
 	float setsWonRatio = 0;
 	float totalPercent = 0;
-	for (int i = 0; i < 7; i++) {
+
+	// prints ratio headers
+	std::cout << p1.getName() << ":" << p2.getName();
+	SetConsoleCursorPosition(hconsole, { 9, 0 }); 
+	std::cout << "Frequency:" << std::endl;	
+	
+	// prints player one's stats
+	for (int i = 6; i >= 0; i--) {
 		setsWonRatio = float(p1.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
 		totalPercent += setsWonRatio;
-		std::cout << i << ":7 -- " << setsWonRatio << "%"<< std::endl;
+		
+		SetConsoleCursorPosition(hconsole, { 2, line });
+		std::cout << i << ":7";
+		SetConsoleCursorPosition(hconsole, { 11, line });
+		std::cout << setsWonRatio << "%" << std::endl;
+		line++;
 	}
 
-	std::cout << std::endl;
+	line++;
 
-	for (int i = 0; i < 7; i++) {
+	// prints player two's stats
+	for (int i = 6; i >= 0; i--) {
 		setsWonRatio = float(p2.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
 		totalPercent += setsWonRatio;
-		std::cout << "7:" << i << " -- " << setsWonRatio << "%" << std::endl;;
+
+		SetConsoleCursorPosition(hconsole, { 2, line });
+		std::cout << "7:" << i;
+		SetConsoleCursorPosition(hconsole, { 11, line });
+		std::cout << setsWonRatio << "%" << std::endl;
+		line++;
 	}
 
-	std::cout << totalPercent << "%";
+	// total matches simulated
+	std::cout << std::endl << "Matches Simulated: " << g.getMatchesSimulated() << std::endl;
+
+	// prints matches won per player
+	std::cout << p1.getName() << " won: " << p1.getMatchesWon() << std::endl;
+	std::cout << p2.getName() << " won: " << p2.getMatchesWon() << std::endl << std::endl;
 }
 
+// prints all stats for a single player
 void printPlayerStats(Player player) {
 	std::cout << player.getName() << "\n";
 	std::cout << "Matches Won: " << player.getMatchesWon() << "\n";
@@ -56,12 +81,12 @@ int main() {
 	int sims = simCount();
 	Game game(Joe, Sid);
 
+	// simulates requested amount of matches
 	for (game.getMatchesSimulated(); game.getMatchesSimulated() < sims; game.incMatchesSimulated()) {
 		game.simulateMatch();
 	}	
 		
 	printStats(Joe, Sid, game);
-	//printStats(Sid);
 }
 
 

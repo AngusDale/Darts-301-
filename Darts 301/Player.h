@@ -9,7 +9,6 @@ class Player
 {
 public:	
 	Player(int a, std::string n);
-	Player();
 	~Player();
 
 	void reset();
@@ -21,11 +20,15 @@ public:
 
 #pragma region Getters & Setters
 
+	int getScore();
+	void setScore(int);
+	int getAccuracy();
+	std::string getName();
+
 	int getDartsThrown();
 	void incDartsThrown();
 	int getBullsHit();
-	void incBullsHit();
-	
+	void incBullsHit();	
 
 	int getRoundsWon();
 	void setRoundsWon(int);
@@ -39,28 +42,21 @@ public:
 	int getTotalSetsWon();
 	void setTotalSetsWon();
 
-	int getScore();
-	void setScore(int);
-	int getAccuracy();
-	std::string getName();
-	
 #pragma endregion
 
 private: 
-	
-	int dartsThrown;
-	int bullsHit;
 	int score;
+	int accuracy;
+	std::string name;
+
+	int dartsThrown;
+	int bullsHit;	
 
 	int roundsWon;
 	int setsWon;
 	int matchesWon;
 
 	int totalRoundsWon;
-	int totalSetsWon;
-
-
-	std::string name;
-	int accuracy;
+	int totalSetsWon;	
 };
 

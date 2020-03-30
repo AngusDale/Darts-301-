@@ -13,13 +13,6 @@ Player::Player(int a, std::string n) {
 	}
 }
 
-Player::Player() {
-	accuracy = DEFAULT_ACCURACY;
-	name = " ";		
-
-	reset();
-}
-
 Player::~Player() {
 
 }
@@ -33,7 +26,7 @@ void Player::reset() {
 	dartsThrown = 0;
 }
 
-void Player::resetScore(){
+void Player::resetScore() {
 	score = STARTING_SCORE;
 }
 

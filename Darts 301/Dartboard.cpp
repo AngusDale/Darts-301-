@@ -1,7 +1,6 @@
 #include "Dartboard.h"
 
 Dartboard::Dartboard() {
-	gameIsWon = false;
 	winningThrow = false;
 }
 
@@ -36,11 +35,10 @@ int Dartboard::single(int accuracy, int throwFor) {
 }
 
 // accuracy is slightly decreased when aiming at a double due to it being at the edge of the board
-int Dartboard::_double(int accuracy, int throwFor)
-{
+int Dartboard::_double(int accuracy, int throwFor) {
 	int rand = roll(100);
 	if (throwFor <= 20) {
-		if (rand <= accuracy - accuracy / 10.0f) {
+		if (rand <= accuracy * 0.9f) {
 			winningThrow = true;
 			return throwFor * 2;			
 		}
@@ -62,12 +60,12 @@ int Dartboard::_double(int accuracy, int throwFor)
 	return 0;
 }
 
-int Dartboard::triple(int accuracy, int throwFor)
-{
+// 
+int Dartboard::triple(int accuracy, int throwFor) {
 	winningThrow = false;
 	int rand = roll(100);
-	// accuracy is devided by 2 only for the triple tile due to it's physical size
-	if (rand <= accuracy - 10) {
+	// accuracy is slightly decreased when aiming at a triple due to it being a smaller segment
+	if (rand <= accuracy * 0.9f) {
 		return throwFor * 3;
 	}
 	else if (rand <= accuracy) {
@@ -85,9 +83,8 @@ int Dartboard::triple(int accuracy, int throwFor)
 }
 
 // returns one number either side of the tile the player was aiming for
-int Dartboard::getNeighbor(int num, int rand)
-{
-	int position;
+int Dartboard::getNeighbor(int num, int rand) {
+	int position = 0;
 
 	// finds the position of the intended throw on the dartboard
 	for (int i = 0; i < NUMBER_OF_SCORES; i++) {
@@ -110,23 +107,10 @@ int Dartboard::getNeighbor(int num, int rand)
 	return 0;
 }
 
-
-
 // roll a random number
 int Dartboard::roll(int x) {
 	int roll = rand() % x + 1;
 	return roll;
-}
-
-bool Dartboard::validFinisher(int score)
-{
-	for (int i = 0; i < NUMBER_OF_SCORES; i++) {
-		if (score == numsOnBoard[i] * 2 || score == 50) {
-			return true;
-		}
-	}
-	
-	return false;
 }
 
 
