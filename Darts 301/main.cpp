@@ -19,21 +19,24 @@ bool simulateAgain();
 
 int main() {
 	srand(time(NULL));
+
 	Player Joe(75, "Joe"); // accuracy, name
 	Player Sid(75, "Sid");	
-
-	
 	Game game(Joe, Sid);
+
 	bool again = false;
+
 	do {
 		game.reset();
 		Joe.reset();
 		Sid.reset();
+
 		int sims = simCount();
 		// simulates requested amount of matches
 		for (game.getMatchesSimulated(); game.getMatchesSimulated() < sims; game.incMatchesSimulated()) {
 			game.simulateMatch();
 		}
+
 		printStats(Joe, Sid, game);
 		again = simulateAgain();
 	} while (again);	
@@ -70,7 +73,7 @@ int getValidInt()
 
 // asks how many simulations to execute
 int simCount() {
-	std::cout << "How many simulations would you like to run?" << std::endl;
+	std::cout << "How many simulations would you like to run? ";
 	int simcount = getValidInt();
 	system("cls");
 	return simcount;
@@ -138,6 +141,7 @@ bool simulateAgain() {
 	std::cout << "Would you like to simulate more? (y/n) ";
 	std::string response;
 	getline(std::cin, response);
+	std::cout << std::endl;
 	return (response[0] == 'y' || response[0] == 'Y');
 }
 
