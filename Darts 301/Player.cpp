@@ -2,15 +2,8 @@
 
 Player::Player(int a, std::string n) {
 	accuracy = a;
-	name = n;		
-	matchesWon = 0;
-	totalSetsWon = 0;
-	totalRoundsWon = 0;
-	reset();
-	
-	for (int i = 0; i < 7; i++) {
-		setsWonDuringLoss[i] = 0;
-	}
+	name = n;
+	reset();	
 }
 
 Player::~Player() {
@@ -24,6 +17,13 @@ void Player::reset() {
 	roundsWon = 0;
 	bullsHit = 0;
 	dartsThrown = 0;
+	matchesWon = 0;
+	totalSetsWon = 0;
+	totalRoundsWon = 0;
+
+	for (int i = 0; i < 7; i++) {
+		setsWonDuringLoss[i] = 0;
+	}
 }
 
 void Player::resetScore() {

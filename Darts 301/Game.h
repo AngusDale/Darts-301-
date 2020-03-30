@@ -15,6 +15,8 @@ public:
 	Player* Sid;
 	Dartboard dartboard;	
 
+	void reset();
+
 	void simulateMatch(); // one match is first to 7 sets won
 	void simulateSet(); // one set is first to 3 rounds won
 	void simulateRound(); // one round is 3 turns per player from 501 to 0

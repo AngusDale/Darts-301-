@@ -5,6 +5,12 @@ Game::Game(Player& J, Player& S) {
 	Sid = &S;
 	roundsSimulated = 0;
 
+	reset();
+}
+
+void Game::reset()
+{
+	roundsSimulated = 0;
 	roundIsWon = false;
 	joesTurn = false;
 	matchesSimulated = 0;

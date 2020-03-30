@@ -3,15 +3,75 @@
 #include <iostream>
 #include <time.h> 
 #include <windows.h>
+#include <string> 
+#include <sstream>
 
 // for controling cursor position
 HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+#pragma region Prototypes
+int getValidInt();
+int simCount();
+void printStats(Player, Player, Game);
+void printPlayerStats(Player);
+bool simulateAgain();
+#pragma endregion
+
+int main() {
+	srand(time(NULL));
+	Player Joe(75, "Joe"); // accuracy, name
+	Player Sid(75, "Sid");	
+
+	
+	Game game(Joe, Sid);
+	bool again = false;
+	do {
+		game.reset();
+		Joe.reset();
+		Sid.reset();
+		int sims = simCount();
+		// simulates requested amount of matches
+		for (game.getMatchesSimulated(); game.getMatchesSimulated() < sims; game.incMatchesSimulated()) {
+			game.simulateMatch();
+		}
+		printStats(Joe, Sid, game);
+		again = simulateAgain();
+	} while (again);	
+}
+
+// gets a valid input for an integer from the user
+int getValidInt()
+{
+	int newInt = 0;
+	float roundedInt = 0;
+	do {
+		std::string tempString = " ";
+		// recieving input using getline
+		getline(std::cin, tempString);
+		// converts the string to an int
+		std::stringstream geek(tempString);
+		geek >> newInt;
+
+		roundedInt = roundf(newInt);
+
+		std::cout << roundedInt << std::endl;
+
+		// input validation
+		if (roundedInt <= 0) {
+			std::cout << std::endl << "Please enter a number above 0: ";
+		}
+		else if (roundedInt >= 100000) {
+			std::cout << "Enter a number lower than 100'000.\n";
+		}
+		else { return roundedInt; }
+	} while (roundedInt <= 0 || roundedInt >= 100000);
+	system("cls");
+}
+
 // asks how many simulations to execute
 int simCount() {
 	std::cout << "How many simulations would you like to run?" << std::endl;
-	int simcount = 0;
-	std::cin >> simcount;
+	int simcount = getValidInt();
 	system("cls");
 	return simcount;
 }
@@ -25,14 +85,14 @@ void printStats(Player p1, Player p2, Game g) {
 
 	// prints ratio headers
 	std::cout << p1.getName() << ":" << p2.getName();
-	SetConsoleCursorPosition(hconsole, { 9, 0 }); 
-	std::cout << "Frequency:" << std::endl;	
-	
+	SetConsoleCursorPosition(hconsole, { 9, 0 });
+	std::cout << "Frequency:" << std::endl;
+
 	// prints player one's stats
 	for (int i = 6; i >= 0; i--) {
 		setsWonRatio = float(p1.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
 		totalPercent += setsWonRatio;
-		
+
 		SetConsoleCursorPosition(hconsole, { 2, line });
 		std::cout << i << ":7";
 		SetConsoleCursorPosition(hconsole, { 11, line });
@@ -73,21 +133,12 @@ void printPlayerStats(Player player) {
 	std::cout << std::endl;
 }
 
-int main() {
-	srand(time(NULL));
-	Player Joe(75, "Joe"); // accuracy, name
-	Player Sid(75, "Sid");	
-
-	int sims = simCount();
-	Game game(Joe, Sid);
-
-	// simulates requested amount of matches
-	for (game.getMatchesSimulated(); game.getMatchesSimulated() < sims; game.incMatchesSimulated()) {
-		game.simulateMatch();
-	}	
-		
-	printStats(Joe, Sid, game);
+// simulate again
+bool simulateAgain() {
+	std::cout << "Would you like to simulate more? (y/n) ";
+	std::string response;
+	getline(std::cin, response);
+	return (response[0] == 'y' || response[0] == 'Y');
 }
-
 
 
