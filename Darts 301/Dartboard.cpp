@@ -35,12 +35,12 @@ int Dartboard::single(int accuracy, int throwFor) {
 	return 0;
 }
 
-// accuracy is halved in this function to illustrate that roughly half of the accuracy circle is off the board on and actual dart board
+// accuracy is slightly decreased when aiming at a double due to it being at the edge of the board
 int Dartboard::_double(int accuracy, int throwFor)
 {
 	int rand = roll(100);
 	if (throwFor <= 20) {
-		if (rand <= accuracy - 10) {
+		if (rand <= accuracy - accuracy / 10.0f) {
 			winningThrow = true;
 			return throwFor * 2;			
 		}

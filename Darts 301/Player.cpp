@@ -8,6 +8,9 @@ Player::Player(int a, std::string n) {
 	totalRoundsWon = 0;
 	reset();
 	
+	for (int i = 0; i < 7; i++) {
+		setsWonDuringLoss[i] = 0;
+	}
 }
 
 Player::Player() {
@@ -55,37 +58,6 @@ void Player::recordSetsWon() {
 	}
 }
 
-std::string Player::getStringState() {
-	switch (state) {
-	case State::ahead: return "AHEAD";
-		break;
-	case State::behind: return "BEHIND";
-		break;
-	case State::neutral: return "NEUTRAL";
-		break;
-	case State::final_shot: return "FINAL SHOT";
-		break;
-	default: return "NO STATE SET";
-		break;
-		return std::string();
-	}
-}
-
-void Player::setState(char i) {
-	switch (i) {	
-	case 'a': state = State::ahead;
-		break;
-	case 'n': state = State::neutral;
-		break;
-	case 'b': state = State::behind;
-		break;
-	case 'f': state = State::final_shot;
-		break;
-	default: state = State::neutral;
-		break;
-	}
-}
-
 #pragma region Getters & Setters
 int Player::getMatchesWon()			{ return matchesWon; }
 void Player::incMatchesWon()		{ matchesWon++; }
@@ -107,6 +79,5 @@ int Player::getDartsThrown()	{ return dartsThrown; }
 void Player::incDartsThrown()	{ dartsThrown++; }
 
 int Player::getAccuracy()		{ return accuracy; }
-State Player::getState()		{ return state; }
 std::string Player::getName()	{ return name; }
 #pragma endregion

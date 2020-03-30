@@ -6,6 +6,11 @@ Game::Game(Player& J, Player& S) {
 	roundsSimulated = 0;	
 
 	roundIsWon = false;
+	joesTurn = false;
+	matchesSimulated = 0;
+	setsSimulated = 0;
+	numThrown = 0;
+	scoreBefore = 0;
 }
 
 void Game::simulateMatch()
@@ -15,11 +20,12 @@ void Game::simulateMatch()
 	// loops until the player has reached 7 sets won (best of 13)
 	do {
 		simulateSet();
+		incSetsSimulated();
 	} while (!matchIsWon());
 
-	// increments matches won if setsWon = 7
-	Joe->recordSetsWon();
-	Sid->recordSetsWon();	
+
+	updateSetCounters(Joe);
+	updateSetCounters(Sid);
 }
 
 void Game::simulateSet() {
@@ -35,20 +41,14 @@ void Game::simulateSet() {
 		Sid->resetScore();
 	} while (!setIsWon());	
 
-	updateCounters(Joe);
-	updateCounters(Sid);
-
-	system("cls");
-	printStats(Joe);
-	printStats(Sid);
+	Joe->setTotalRoundsWon();
+	Sid->setTotalRoundsWon();
 }
 
 // simulates a round
 void Game::simulateRound()
 {
-
 	roundIsWon = false;
-
 	do {
 		// simulates a turn for each player and flip flops between them
 		for (int i = 0; i < 2; i++) {
@@ -148,8 +148,6 @@ bool Game::isRoundWon(Player* player)
 {
 	if (dartboard.winningThrow) {
 		player->setRoundsWon(player->getRoundsWon() + 1);
-		//std::cout << std::endl << player->getName() << " has won! " << std::endl;
-
 		return true;
 	}
 	return false;	
@@ -180,20 +178,16 @@ bool Game::matchIsWon() {
 	return false;
 }
 
-void Game::updateCounters(Player* player){
-	player->setTotalRoundsWon();
+// increments matches won if setsWon = 7 and records how many sets were won if a match is lost
+void Game::updateSetCounters(Player* player)
+{	
+	player->recordSetsWon();
 	player->setTotalSetsWon();
-	
+	player->setSetsWon(0);
 }
 
-void Game::printStats(Player* player)
-{
-	std::cout << player->getName() << "\n";
-	std::cout << "Matches Won: " << player->getMatchesWon() << "\n";
-	std::cout << "Rounds Won: " << player->getTotalRoundsWon() << "\n";
-	std::cout << "Sets Won: " << player->getTotalSetsWon() << "\n";
-	std::cout << "Darts Thrown: " << player->getDartsThrown() << "\n";
-	std::cout << "Bulls Hit: " << player->getBullsHit() << "\n";
-	std::cout << std::endl;
-}
+int Game::getMatchesSimulated(){ return matchesSimulated; }
+void Game::incMatchesSimulated(){ matchesSimulated++; }
+int Game::getSetsSimulated(){ return setsSimulated; }
+void Game::incSetsSimulated(){ setsSimulated++; }
 	

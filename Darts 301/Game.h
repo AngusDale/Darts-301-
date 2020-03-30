@@ -26,9 +26,14 @@ public:
 	bool isRoundWon(Player*);
 	bool setIsWon();	
 	bool matchIsWon();
+	
+	void updateSetCounters(Player*);
 
-	void updateCounters(Player*);
-	void printStats(Player*);
+	int getMatchesSimulated();
+	void incMatchesSimulated();
+
+	int getSetsSimulated();
+	void incSetsSimulated();
 
 private:
 	int numThrown;

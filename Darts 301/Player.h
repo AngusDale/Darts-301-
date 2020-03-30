@@ -5,24 +5,15 @@
 #define DEFAULT_ACCURACY 70;
 #define STARTING_SCORE 301;
 
-enum class State {
-	neutral = 0,
-	behind,
-	final_shot,
-	ahead
-};
-
 class Player
 {
 public:	
 	Player(int a, std::string n);
 	Player();
 	~Player();
-	State state;	
 
 	void reset();
 	void resetScore();
-	std::string getStringState();
 	void recordSetsWon();
 
 	// when a set is finished, the amount of rounds they won will be recorded except for 7 sets won. This keeps track of the amount of losses and how many sets were won during that loss
@@ -51,8 +42,6 @@ public:
 	int getScore();
 	void setScore(int);
 	int getAccuracy();
-	void setState(char);
-	State getState();
 	std::string getName();
 	
 #pragma endregion
