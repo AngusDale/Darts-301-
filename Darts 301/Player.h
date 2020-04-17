@@ -3,7 +3,7 @@
 #include<iostream>
 
 #define DEFAULT_ACCURACY 70;
-#define STARTING_SCORE 501;
+#define STARTING_SCORE 301;
 
 class Player
 {
