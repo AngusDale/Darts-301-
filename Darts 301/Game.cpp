@@ -8,8 +8,7 @@ Game::Game(Player& J, Player& S) {
 	reset();
 }
 
-void Game::reset()
-{
+void Game::reset() {
 	roundsSimulated = 0;
 	roundIsWon = false;
 	joesTurn = false;
@@ -139,8 +138,8 @@ int Game::getThrow(Player* player) {
 bool Game::whoGoesFirst() {
 	int jRoll, sRoll;
 	
-	/*	subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy
-	because the lowest number rolled wins. You could think of this as each throw being a radius "0" (the bull) and "100 - the accuracy" being the outer circle. 
+	/*	I am subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy
+	because the lowest number rolled wins. You could think of this as each throw being a radius. "0" being the bull and "100 - the accuracy" being the outer circle. 
 	This gives the higher accuracy a better chance of hitting the bull and going first because it's more likely they'll roll a smaller number. */
 
 	do {		

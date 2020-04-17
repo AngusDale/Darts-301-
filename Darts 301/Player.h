@@ -3,7 +3,7 @@
 #include<iostream>
 
 #define DEFAULT_ACCURACY 70;
-#define STARTING_SCORE 301;
+#define STARTING_SCORE 501;
 
 class Player
 {
@@ -15,7 +15,8 @@ public:
 	void resetScore();
 	void recordSetsWon();
 
-	// when a set is finished, the amount of rounds they won will be recorded except for 7 sets won. This keeps track of the amount of losses and how many sets were won during that loss
+	// when a match is finished, the amount of sets they won will be recorded except for 7 sets won (this would be a win). 
+	// this keeps track of the amount of losses and how many sets were won during that loss
 	int setsWonDuringLoss[7];
 
 #pragma region Getters & Setters
@@ -25,6 +26,7 @@ public:
 	int getAccuracy();
 	std::string getName();
 
+	// functions with the "inc" prefix increment the variable following "inc" by 1
 	int getDartsThrown();
 	void incDartsThrown();
 	int getBullsHit();

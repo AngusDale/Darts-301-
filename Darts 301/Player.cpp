@@ -21,6 +21,7 @@ void Player::reset() {
 	totalSetsWon = 0;
 	totalRoundsWon = 0;
 
+	// resets the sets won array
 	for (int i = 0; i < 7; i++) {
 		setsWonDuringLoss[i] = 0;
 	}
@@ -31,6 +32,7 @@ void Player::resetScore() {
 }
 
 // records how many sets the player won and increments the matches won if it's 7
+// I am using the index of the array to denote the number of sets won, and using the number inside the array at that index to keep track of how many were won
 void Player::recordSetsWon() {
 	switch (setsWon) {
 	case 0: setsWonDuringLoss[0]++;

@@ -20,7 +20,7 @@ bool simulateAgain();
 int main() {
 	srand(time(NULL));
 
-	Player Joe(75, "Joe"); // accuracy, name
+	Player Joe(77, "Joe"); // accuracy, name
 	Player Sid(75, "Sid");	
 	Game game(Joe, Sid);
 
@@ -42,7 +42,7 @@ int main() {
 	} while (again);	
 }
 
-// gets a valid input for an integer from the user
+// gets a valid integer from the user
 int getValidInt()
 {
 	int newInt = 0;
@@ -83,8 +83,8 @@ int simCount() {
 void printStats(Player p1, Player p2, Game g) {
 	// keeps track of the cursor's y position
 	SHORT line = 1;
+
 	float setsWonRatio = 0;
-	float totalPercent = 0;
 
 	// prints ratio headers
 	std::cout << p1.getName() << ":" << p2.getName();
@@ -94,7 +94,6 @@ void printStats(Player p1, Player p2, Game g) {
 	// prints player one's stats
 	for (int i = 6; i >= 0; i--) {
 		setsWonRatio = float(p1.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
-		totalPercent += setsWonRatio;
 
 		SetConsoleCursorPosition(hconsole, { 2, line });
 		std::cout << i << ":7";
@@ -108,7 +107,6 @@ void printStats(Player p1, Player p2, Game g) {
 	// prints player two's stats
 	for (int i = 6; i >= 0; i--) {
 		setsWonRatio = float(p2.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
-		totalPercent += setsWonRatio;
 
 		SetConsoleCursorPosition(hconsole, { 2, line });
 		std::cout << "7:" << i;
