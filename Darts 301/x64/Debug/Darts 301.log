@@ -1,6 +1,7 @@
-﻿  main.cpp
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(24,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(68,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(77,17): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(81): warning C4715: 'getValidInt': not all control paths return a value
+﻿  Dartboard.cpp
+  main.cpp
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(22,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(66,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(75,17): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   Darts 301.vcxproj -> C:\Users\Angus D\source\repos\Darts-301-\x64\Debug\Darts 301.exe

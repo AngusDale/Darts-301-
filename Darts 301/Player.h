@@ -2,7 +2,6 @@
 #include <string>
 #include<iostream>
 
-#define DEFAULT_ACCURACY 70;
 #define STARTING_SCORE 501;
 
 class Player

@@ -10,20 +10,18 @@
 HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 #pragma region Prototypes
-
 int getValidInt();
 int simCount();
 void printStats(Player, Player, Game);
 void printFrequencies(bool, Player, Game, SHORT, int);
 void printPlayerStats(Player);
 bool simulateAgain();
-
 #pragma endregion
 
 int main() {
 	srand(time(NULL));
 
-	Player Joe(76, "Joe"); // accuracy, name
+	Player Joe(75, "Joe"); // accuracy, name
 	Player Sid(75, "Sid");
 	Game game(Joe, Sid);
 
@@ -77,7 +75,7 @@ int getValidInt() {
 		else { return roundedInt; }
 
 	} while (roundedInt <= 0 || roundedInt >= 100000);
-	system("cls");
+	return 0;
 }
 
 // asks how many simulations to execute
@@ -89,18 +87,18 @@ int simCount() {
 }
 
 // prints the stats of each player
-void printStats(Player p1, Player p2, Game game) {
+void printStats(Player J, Player S, Game game) {
 	// keeps track of the cursor's y position
-	SHORT line = 1;	
+	SHORT line = 1;
 	float setsWonRatio = 0;
 	// prints ratio headers
-	std::cout << p1.getName() << ":" << p2.getName();
+	std::cout << J.getName() << ":" << S.getName();
 	SetConsoleCursorPosition(hconsole, { 9, 0 });
 	std::cout << "Frequency:" << std::endl;
 
 	// prints player one's stats
 	for (int i = 6; i >= 0; i--) {
-		printFrequencies(false, p1, game, line, i);
+		printFrequencies(false, J, game, line, i);
 		line++;
 	}
 
@@ -108,7 +106,7 @@ void printStats(Player p1, Player p2, Game game) {
 
 	// prints player two's stats
 	for (int i = 6; i >= 0; i--) {
-		printFrequencies(true, p1, game, line, i);
+		printFrequencies(true, S, game, line, i);
 		line++;
 	}
 
@@ -116,18 +114,18 @@ void printStats(Player p1, Player p2, Game game) {
 	std::cout << std::endl << "Matches Simulated: " << game.getMatchesSimulated() << std::endl;
 
 	// prints matches won per player
-	std::cout << p1.getName() << " won: " << p1.getMatchesWon() << std::endl;
-	std::cout << p2.getName() << " won: " << p2.getMatchesWon() << std::endl << std::endl;
+	std::cout << J.getName() << " won: " << J.getMatchesWon() << std::endl;
+	std::cout << S.getName() << " won: " << S.getMatchesWon() << std::endl << std::endl;
 }
 
 void printFrequencies(bool left, Player p, Game g, SHORT currentLine, int i)
-{	
+{
 	float setsWonRatio = float(p.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
 
 	SetConsoleCursorPosition(hconsole, { 2, currentLine });
 
 	if (left) { std::cout << "7:" << i; }
-	else{ std::cout << i << ":7"; }
+	else { std::cout << i << ":7"; }
 
 	SetConsoleCursorPosition(hconsole, { 11, currentLine });
 	std::cout << setsWonRatio << "%" << std::endl;

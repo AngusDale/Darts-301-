@@ -29,7 +29,7 @@ void Game::simulateMatch() {
 
 
 	updateSetCounters(Joe);
-	updateSetCounters(Sid);
+	updateSetCounters(Sid);		
 }
 
 // simulates a set
@@ -82,11 +82,11 @@ void Game::simulateRound() {
 void Game::simulateTurn(Player* player) {
 	// we save the player's score incase they go below 0 and need to reset their score to before their turn
 	scoreBefore = player->getScore();
-
+	//std::cout << player->getName() << std::endl;
 	for (int i = 0; i < turnsPerRound; i++){		
 		player->incDartsThrown(); // increments dartsThrown
 		numThrown = getThrow(player);
-		
+		//std::cout << player->getScore() << " " << numThrown << " ";
 		if (numThrown == 50) { player->incBullsHit(); } // increments bullsHit if the player hits a bullseye
 		player->setScore(player->getScore() - numThrown); // decreases the player's score		
 
@@ -102,13 +102,14 @@ void Game::simulateTurn(Player* player) {
 				player->setRoundsWon(player->getRoundsWon() + 1);
 				i = 5; // ends the player's turn		
 			}
-		}		
+		}	
+		//std::cout << player->getScore() << std::endl;
 	}	
 }
 
 // returns the number the player threw
 int Game::getThrow(Player* player) {
-	if (player->getScore() > 70) {
+	if (player->getScore() > 71) {
 		return dartboard.triple(player->getAccuracy(), 20);
 	}
 	else if (player->getScore() > 50) {
@@ -134,7 +135,7 @@ int Game::getThrow(Player* player) {
 bool Game::whoGoesFirst() {
 	int jRoll, sRoll;
 	
-	/*	I am subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy
+	/* I am subtracting the accuracy from 100 here to weight the throw in favor of the highest accuracy
 	because the lowest number rolled wins. You could think of this as each throw being a radius. "0" being the bull and "100 - the accuracy" being the outer circle. 
 	This gives the higher accuracy a better chance of hitting the bull and going first because it's more likely they'll roll a smaller number. */
 
