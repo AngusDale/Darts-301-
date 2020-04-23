@@ -10,18 +10,21 @@
 HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 #pragma region Prototypes
+
 int getValidInt();
 int simCount();
 void printStats(Player, Player, Game);
+void printFrequencies(bool, Player, Game, SHORT, int);
 void printPlayerStats(Player);
 bool simulateAgain();
+
 #pragma endregion
 
 int main() {
 	srand(time(NULL));
 
-	Player Joe(77, "Joe"); // accuracy, name
-	Player Sid(75, "Sid");	
+	Player Joe(76, "Joe"); // accuracy, name
+	Player Sid(75, "Sid");
 	Game game(Joe, Sid);
 
 	bool again = false;
@@ -31,20 +34,27 @@ int main() {
 		Joe.reset();
 		Sid.reset();
 
+		// user input
 		int sims = simCount();
+
 		// simulates requested amount of matches
 		for (game.getMatchesSimulated(); game.getMatchesSimulated() < sims; game.incMatchesSimulated()) {
 			game.simulateMatch();
+
+			// a visual count of the simulations progress
+			SetConsoleCursorPosition(hconsole, { 0, 0 });
+			std::cout << game.getMatchesSimulated() << "/" << sims << std::endl;
 		}
 
+		system("cls");
 		printStats(Joe, Sid, game);
 		again = simulateAgain();
-	} while (again);	
+
+	} while (again);
 }
 
 // gets a valid integer from the user
-int getValidInt()
-{
+int getValidInt() {
 	int newInt = 0;
 	float roundedInt = 0;
 	do {
@@ -54,10 +64,8 @@ int getValidInt()
 		// converts the string to an int
 		std::stringstream geek(tempString);
 		geek >> newInt;
-
+		// rounds the number to the closest int
 		roundedInt = roundf(newInt);
-
-		std::cout << roundedInt << std::endl;
 
 		// input validation
 		if (roundedInt <= 0) {
@@ -67,6 +75,7 @@ int getValidInt()
 			std::cout << "Enter a number lower than 100'000.\n";
 		}
 		else { return roundedInt; }
+
 	} while (roundedInt <= 0 || roundedInt >= 100000);
 	system("cls");
 }
@@ -80,12 +89,10 @@ int simCount() {
 }
 
 // prints the stats of each player
-void printStats(Player p1, Player p2, Game g) {
+void printStats(Player p1, Player p2, Game game) {
 	// keeps track of the cursor's y position
-	SHORT line = 1;
-
+	SHORT line = 1;	
 	float setsWonRatio = 0;
-
 	// prints ratio headers
 	std::cout << p1.getName() << ":" << p2.getName();
 	SetConsoleCursorPosition(hconsole, { 9, 0 });
@@ -93,12 +100,7 @@ void printStats(Player p1, Player p2, Game g) {
 
 	// prints player one's stats
 	for (int i = 6; i >= 0; i--) {
-		setsWonRatio = float(p1.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
-
-		SetConsoleCursorPosition(hconsole, { 2, line });
-		std::cout << i << ":7";
-		SetConsoleCursorPosition(hconsole, { 11, line });
-		std::cout << setsWonRatio << "%" << std::endl;
+		printFrequencies(false, p1, game, line, i);
 		line++;
 	}
 
@@ -106,21 +108,29 @@ void printStats(Player p1, Player p2, Game g) {
 
 	// prints player two's stats
 	for (int i = 6; i >= 0; i--) {
-		setsWonRatio = float(p2.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
-
-		SetConsoleCursorPosition(hconsole, { 2, line });
-		std::cout << "7:" << i;
-		SetConsoleCursorPosition(hconsole, { 11, line });
-		std::cout << setsWonRatio << "%" << std::endl;
+		printFrequencies(true, p1, game, line, i);
 		line++;
 	}
 
 	// total matches simulated
-	std::cout << std::endl << "Matches Simulated: " << g.getMatchesSimulated() << std::endl;
+	std::cout << std::endl << "Matches Simulated: " << game.getMatchesSimulated() << std::endl;
 
 	// prints matches won per player
 	std::cout << p1.getName() << " won: " << p1.getMatchesWon() << std::endl;
 	std::cout << p2.getName() << " won: " << p2.getMatchesWon() << std::endl << std::endl;
+}
+
+void printFrequencies(bool left, Player p, Game g, SHORT currentLine, int i)
+{	
+	float setsWonRatio = float(p.setsWonDuringLoss[i]) / float(g.getMatchesSimulated()) * 100;
+
+	SetConsoleCursorPosition(hconsole, { 2, currentLine });
+
+	if (left) { std::cout << "7:" << i; }
+	else{ std::cout << i << ":7"; }
+
+	SetConsoleCursorPosition(hconsole, { 11, currentLine });
+	std::cout << setsWonRatio << "%" << std::endl;
 }
 
 // prints all stats for a single player

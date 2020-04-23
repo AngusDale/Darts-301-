@@ -10,7 +10,7 @@ Player::~Player() {
 
 }
 
-// resets score, setsWon, roundsWon, bullsHit, dartsThrown
+// resets variables to 0
 void Player::reset() { 
 	score = STARTING_SCORE; 
 	setsWon = 0;
@@ -54,6 +54,7 @@ void Player::recordSetsWon() {
 }
 
 #pragma region Getters & Setters
+
 int Player::getMatchesWon()			{ return matchesWon; }
 void Player::incMatchesWon()		{ matchesWon++; }
 int Player::getSetsWon()			{ return setsWon; }
@@ -75,4 +76,5 @@ void Player::incDartsThrown()	{ dartsThrown++; }
 
 int Player::getAccuracy()		{ return accuracy; }
 std::string Player::getName()	{ return name; }
+
 #pragma endregion

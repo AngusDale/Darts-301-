@@ -3,7 +3,7 @@
 #include<iostream>
 
 #define DEFAULT_ACCURACY 70;
-#define STARTING_SCORE 301;
+#define STARTING_SCORE 501;
 
 class Player
 {
@@ -15,8 +15,8 @@ public:
 	void resetScore();
 	void recordSetsWon();
 
-	// when a match is finished, the amount of sets they won will be recorded except for 7 sets won (this would be a win). 
-	// this keeps track of the amount of losses and how many sets were won during that loss
+	// when a match is finished, the amount of sets the player won will be recorded except for 7 sets won (this would be a match win). 
+	// this keeps track of the amount of losses (the sum of all indexes) and how many sets were won during that loss (the number at an index)
 	int setsWonDuringLoss[7];
 
 #pragma region Getters & Setters
@@ -58,6 +58,7 @@ private:
 	int setsWon;
 	int matchesWon;
 
+	// total sets and rounds accross all matches simulated
 	int totalRoundsWon;
 	int totalSetsWon;	
 };

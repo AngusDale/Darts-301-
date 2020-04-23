@@ -34,17 +34,13 @@ void Game::simulateMatch() {
 
 // simulates a set
 void Game::simulateSet() {
-
 	// resets rounds won
 	Joe->setRoundsWon(0);
 	Sid->setRoundsWon(0);
 
 	// loops until a player reaches 3 rounds won (best of 5)
 	do {	
-		simulateRound();
-
-		// resets the player's score back to the starting number
-		
+		simulateRound();		
 	} while (!setIsWon());	
 
 	Joe->setTotalRoundsWon();
@@ -101,7 +97,7 @@ void Game::simulateTurn(Player* player) {
 
 			// if it doesn't need to be reset then it checks to see if they won the round
 		} else if (player->getScore() == 0){ 			
-			roundIsWon = isRoundWon(player);
+			roundIsWon = isRoundWon();
 			if (roundIsWon) { 
 				player->setRoundsWon(player->getRoundsWon() + 1);
 				i = 5; // ends the player's turn		
@@ -112,7 +108,7 @@ void Game::simulateTurn(Player* player) {
 
 // returns the number the player threw
 int Game::getThrow(Player* player) {
-	if (player->getScore() > 71) {
+	if (player->getScore() > 70) {
 		return dartboard.triple(player->getAccuracy(), 20);
 	}
 	else if (player->getScore() > 50) {
@@ -152,11 +148,8 @@ bool Game::whoGoesFirst() {
 }
 
 // returns true if the player's threw a winning throw (is only called if player's score = 0)
-bool Game::isRoundWon(Player* player) {
-	if (dartboard.winningThrow) {		
-		return true;
-	}
-	return false;	
+bool Game::isRoundWon() {
+	return dartboard.winningThrow;
 }
 
 // checks to see if a player has reached 3 rounds won, and increments the sets won counter
@@ -192,9 +185,11 @@ void Game::updateSetCounters(Player* player) {
 	player->setSetsWon(0);
 }
 
-// getters and incrementers 
+#pragma region Getters and incrementers 
+
 int Game::getMatchesSimulated()	{ return matchesSimulated; }
 void Game::incMatchesSimulated(){ matchesSimulated++; }
 int Game::getSetsSimulated()	{ return setsSimulated; }
 void Game::incSetsSimulated()	{ setsSimulated++; }
 	
+#pragma endregion

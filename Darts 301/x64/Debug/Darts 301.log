@@ -1,6 +1,6 @@
 ﻿  main.cpp
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(21,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(58,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(69,17): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(72): warning C4715: 'getValidInt': not all control paths return a value
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(24,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(68,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(77,17): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\Angus D\source\repos\Darts-301-\Darts 301\main.cpp(81): warning C4715: 'getValidInt': not all control paths return a value
   Darts 301.vcxproj -> C:\Users\Angus D\source\repos\Darts-301-\x64\Debug\Darts 301.exe

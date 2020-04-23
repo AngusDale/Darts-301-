@@ -27,7 +27,7 @@ public:
 	bool whoGoesFirst();
 
 	//checks win conditions for each stage of a match
-	bool isRoundWon(Player*);
+	bool isRoundWon();
 	bool setIsWon();	
 	bool matchIsWon();
 	
